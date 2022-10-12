@@ -8,9 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="DaoInterfaces" />
-      <Folder Include="Logic" />
-      <Folder Include="LogicIntrefaces" />
+      <ProjectReference Include="..\SharedDomain\SharedDomain.csproj" />
     </ItemGroup>
 
 </Project>
