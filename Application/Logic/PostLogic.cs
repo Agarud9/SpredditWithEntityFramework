@@ -42,6 +42,11 @@ public class PostLogic : IPostLogic
         return postDao.GetAllAsync();
     }
 
+    public Task<IEnumerable<Post>?> GetByTitle(string title)
+    {
+        return postDao.GetByTitle(title);
+    }
+
     private static void ValidatePost(Post post)
     {
         if (string.IsNullOrEmpty(post.title))
