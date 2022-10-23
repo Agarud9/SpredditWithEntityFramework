@@ -42,9 +42,9 @@ public class PostLogic : IPostLogic
         return postDao.GetAllAsync();
     }
 
-    public Task<IEnumerable<Post>?> GetByTitle(string title)
+    public async Task<IEnumerable<Post>?> GetByTitleAsync(string title)
     {
-        return postDao.GetByTitle(title);
+        return await postDao.GetByTitleAsync(title);
     }
 
     private static void ValidatePost(Post post)

@@ -7,6 +7,7 @@ namespace Application.DaoInterfaces
     {
         public Task<Post> CreateAsync(Post post);
         public Task<IEnumerable<Post>> GetAllAsync();
-        public Task<IEnumerable<Post>?> GetByTitle(string title);
+        Task<IEnumerable<Post>?> GetByTitleAsync(string title);
+        Task<Post?> GetByIdAsync(int id);
     }
 }

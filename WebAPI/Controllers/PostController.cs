@@ -44,7 +44,7 @@ public class PostController : ControllerBase
     {
         try
         { 
-            IEnumerable<Post>? posts = await postLogic.GetByTitle(title); 
+            IEnumerable<Post>? posts = await postLogic.GetByTitleAsync(title); 
             return Ok(posts);
         }
         catch (Exception e)
