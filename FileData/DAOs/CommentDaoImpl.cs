@@ -13,6 +13,16 @@ public class CommentDaoImpl : ICommentDao
     }
     public Task<Comment> CreateAsync(Comment comment)
     {
+        int commentId = 1;
+        
+        if (context.Comments.Any())
+        {
+            commentId = context.Comments.Max(p => p.Id);
+            commentId++;
+        }
+
+        comment.Id = commentId;
+        
         context.Comments.Add(comment);
         context.SaveChange();
         
