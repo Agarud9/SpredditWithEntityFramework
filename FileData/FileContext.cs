@@ -13,7 +13,7 @@ public class FileContext
         get
         {
             LoadData();
-            return dataContainer!.Users;
+            return dataContainer!.Users!;
         }
     }
 
@@ -22,7 +22,7 @@ public class FileContext
         get
         {
             LoadData();
-            return dataContainer!.Posts;
+            return dataContainer!.Posts!;
         }
     }
 
@@ -31,7 +31,7 @@ public class FileContext
         get
         {
             LoadData();
-            return dataContainer!.Comments;
+            return dataContainer!.Comments!;
         }
     }
 
