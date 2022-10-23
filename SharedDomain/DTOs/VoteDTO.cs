@@ -9,8 +9,4 @@ public class VoteDTO
     /// Username who vote on the post.
     /// </summary>
     public string? Username { get; set; }
-    /// <summary>
-    /// Id of the post which the user wants to vote on.
-    /// </summary>
-    public int PostId { get; set; }
 }
