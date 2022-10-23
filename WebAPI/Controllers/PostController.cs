@@ -10,10 +10,12 @@ namespace WebAPI.Controllers;
 public class PostController : ControllerBase
 {
     private readonly IPostLogic postLogic;
+    private readonly IVoteLogic voteLogic;
 
-    public PostController(IPostLogic logic)
+    public PostController(IPostLogic logic, IVoteLogic voteLogic)
     {
         postLogic = logic;
+        this.voteLogic = voteLogic;
     }
 
     [HttpPost]
@@ -53,5 +55,35 @@ public class PostController : ControllerBase
             return BadRequest(e.Message);
         }
         
+    }
+
+    [HttpPost("{id:int}/upvote")]
+    public async Task<IActionResult> UpVotePost(int id, [FromBody] VoteDTO voteDto)
+    {
+        try
+        {
+            await voteLogic.UpVote(id, voteDto);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }
+    }
+    
+    [HttpPost("{id:int}/downvote")]
+    public async Task<IActionResult> DownVotePost(int id, [FromBody] VoteDTO voteDto)
+    {
+        try
+        {
+            await voteLogic.DownVote(id, voteDto);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }
     }
 }

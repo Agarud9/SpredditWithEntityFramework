@@ -1,4 +1,7 @@
-﻿namespace SharedDomain.Models;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+
+namespace SharedDomain.Models;
 
 public class Post
 {
@@ -7,6 +10,10 @@ public class Post
     public User user { get; set; }
     
     public int id { get; set; }
+
+    public int VoteScore => Votes.Any() ? Votes.Select(vote => (int)vote.Type).Sum() : 0;
+
+    public ICollection<Vote> Votes { get; }
 
     public Post()
     {
@@ -17,5 +24,6 @@ public class Post
         this.title = title;
         this.body = body;
         this.user = user;
+        Votes = new List<Vote>();
     }
 }

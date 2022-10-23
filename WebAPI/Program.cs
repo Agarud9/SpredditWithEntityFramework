@@ -23,6 +23,9 @@ builder.Services.AddScoped<IPostLogic, PostLogic>();
 builder.Services.AddScoped<ICommentDao, CommentDaoImpl>();
 builder.Services.AddScoped<ICommentLogic,CommentLogic>();
 
+builder.Services.AddScoped<IVoteDao, VoteDao>();
+builder.Services.AddScoped<IVoteLogic,VoteLogic>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -46,7 +46,7 @@ public class PostLogic : IPostLogic
     {
         return await postDao.GetByTitleAsync(title);
     }
-
+    
     private static void ValidatePost(Post post)
     {
         if (string.IsNullOrEmpty(post.title))
