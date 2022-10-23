@@ -13,7 +13,7 @@ public class Post
 
     public int VoteScore => Votes.Any() ? Votes.Select(vote => (int)vote.Type).Sum() : 0;
 
-    public ICollection<Vote> Votes { get; }
+    public ICollection<Vote> Votes { get; set; }
 
     public Post()
     {
