@@ -34,9 +34,15 @@ public class PostController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Post>>> GetAll()
+    public async Task<ActionResult<IEnumerable<Post>>> GetAll(string? title, string? username)
     {
-        var posts = await postLogic.GetAllAsync();
+        var filterParams = new PostFilterDTO
+        {
+            Title = title,
+            Username = username
+        };
+        
+        var posts = await postLogic.GetByParameterAsync(filterParams);
         return Ok(posts);
     }
 

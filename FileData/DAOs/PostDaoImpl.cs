@@ -54,4 +54,20 @@ public class PostDaoImpl : IPostDao
         Post? post = context.Posts.FirstOrDefault(p => p.id == id);
         return Task.FromResult(post);
     }
+
+    public Task<IEnumerable<Post>> GetByParameterAsync(PostFilterDTO dto)
+    {
+        string? title = dto.Title;
+        string? username = dto.Username;
+        
+        IEnumerable<Post> posts = context.Posts;
+
+        if (title is not null)
+            posts = posts.Where(p => p.title.Equals(title, StringComparison.OrdinalIgnoreCase));
+
+        if (username is not null)
+            posts = posts.Where(p => p.user.Username == username);
+        
+        return Task.FromResult(posts);
+    }
 }

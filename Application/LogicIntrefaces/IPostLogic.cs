@@ -8,4 +8,5 @@ public interface IPostLogic
     public Task<Post> CreateAsync(PostCreationDTO dto);
     public Task<IEnumerable<Post>> GetAllAsync();
     public Task<IEnumerable<Post>?> GetByTitleAsync(string title);
+    Task<IEnumerable<Post>> GetByParameterAsync(PostFilterDTO dto);
 }

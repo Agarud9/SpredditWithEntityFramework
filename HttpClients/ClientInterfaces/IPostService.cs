@@ -1,8 +1,9 @@
-﻿using SharedDomain.Models;
+﻿using SharedDomain.DTOs;
+using SharedDomain.Models;
 
 namespace HttpClients.ClientInterfaces;
 
 public interface IPostService
 {
-    Task<IEnumerable<Post>> GetAllAsync();
+    Task<IEnumerable<Post>> GetAsync(PostFilterDTO? filters = null);
 }

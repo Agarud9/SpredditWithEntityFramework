@@ -46,7 +46,13 @@ public class PostLogic : IPostLogic
     {
         return await postDao.GetByTitleAsync(title);
     }
-    
+
+    public async Task<IEnumerable<Post>> GetByParameterAsync(PostFilterDTO dto)
+    {
+        return await postDao.GetByParameterAsync(dto);
+    }
+
+
     private static void ValidatePost(Post post)
     {
         if (string.IsNullOrEmpty(post.title))

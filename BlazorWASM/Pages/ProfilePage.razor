@@ -1,0 +1,54 @@
+﻿@page "/ProfilePage"
+@using SharedDomain.Models
+@using HttpClients.ClientInterfaces
+@using SharedDomain.DTOs
+@inject IPostService postService
+
+<h3>ProfilePage</h3>
+
+@if (!string.IsNullOrEmpty(msg))
+{
+    <div>
+        <span>@msg</span>
+    </div>
+}
+
+@if (posts == null)
+{
+    <span>Loading..</span>
+}
+else if (!posts.Any())
+{
+    <span>No posts to be displayed</span>
+}
+else
+{
+    <div>
+        @foreach (Post post in posts)
+        {
+            <div>
+                <div><h5>@post.title</h5></div>
+                <div><i>@post.user.Username</i></div>
+                <div>@post.body</div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private IEnumerable<Post>? posts;
+    private string msg = "";
+    
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            posts = await postService.GetAsync(new PostFilterDTO{Username = ""});
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+}
