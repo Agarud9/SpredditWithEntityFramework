@@ -46,23 +46,6 @@ public class PostController : ControllerBase
         return Ok(posts);
     }
 
-    [HttpGet]
-    [Route("getByTitle")]
-    public async Task<ActionResult<IEnumerable<Post>?>> GetByTitle(string title)
-    {
-        try
-        { 
-            IEnumerable<Post>? posts = await postLogic.GetByTitleAsync(title); 
-            return Ok(posts);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return BadRequest(e.Message);
-        }
-        
-    }
-
     [HttpPost("{id:int}/upvote")]
     public async Task<IActionResult> UpVotePost(int id, [FromBody] VoteDTO voteDto)
     {
