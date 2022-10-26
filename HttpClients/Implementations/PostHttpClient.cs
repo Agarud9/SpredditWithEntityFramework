@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net.Http.Json;
+using System.Text.Json;
 using System.Web;
 using HttpClients.ClientInterfaces;
 using SharedDomain.DTOs;
@@ -43,8 +44,6 @@ public class PostHttpClient : IPostService
                 uri += "?" + string.Join("&", searchParams);
             }
         }
-        
-            
         
         
         HttpResponseMessage response = await client.GetAsync(uri);
@@ -96,8 +95,32 @@ public class PostHttpClient : IPostService
         return posts;
     }
 
-    public Task<Post> GetPostByIdAsync(int id)
+    public async Task<Post> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        HttpResponseMessage response = await client.GetAsync($"/post/{id}");
+        string content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
+
+        Post post = JsonSerializer.Deserialize<Post>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+
+        return post;
+    }
+
+    public async Task CreateAsync(PostCreationDTO dto)
+    {
+        HttpResponseMessage response = await client.PostAsJsonAsync("/post", dto);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            string result = await response.Content.ReadAsStringAsync();
+            throw new Exception(result);
+        }
     }
 }

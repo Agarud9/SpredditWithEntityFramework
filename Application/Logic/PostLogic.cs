@@ -57,6 +57,11 @@ public class PostLogic : IPostLogic
         return await postDao.GetByUserAsync(username);
     }
 
+    public async Task<Post?> GetByIdAsync(int id)
+    {
+        return await postDao.GetByIdAsync(id);
+    }
+
 
     private static void ValidatePost(Post post)
     {

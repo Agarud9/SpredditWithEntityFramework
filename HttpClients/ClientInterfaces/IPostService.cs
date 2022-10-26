@@ -8,6 +8,6 @@ public interface IPostService
     Task<IEnumerable<Post>> GetAsync(PostFilterDTO? filters = null);
     Task<IEnumerable<Post>> GetAllPostsAsync();
     Task<IEnumerable<Post>> GetPostsByUserAsync(string username);
-
-    Task<Post> GetPostByIdAsync(int id);
+    Task<Post> GetByIdAsync(int id);
+    Task CreateAsync(PostCreationDTO dto);
 }
