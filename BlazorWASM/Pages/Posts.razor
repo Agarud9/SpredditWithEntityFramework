@@ -1,7 +1,7 @@
 ﻿@page "/Posts"
 @using SharedDomain.Models
 @using HttpClients.ClientInterfaces
-@inject IAllPostsService allPostsService
+@inject IPostService postService
 <h3>Here you can see all posts. Wooow!</h3>
 
 
@@ -81,7 +81,7 @@ else
         msg = "";
         try
         {
-            posts = await allPostsService.GetAllPostsAsync();
+            posts = await postService.GetAllPostsAsync();
         }
         catch (Exception e)
         {
@@ -96,7 +96,7 @@ else
         try
         {
             Console.WriteLine(posts);
-            posts = await allPostsService.GetPostsByUserAsync(postUserFilter);
+            posts = await postService.GetPostsByUserAsync(postUserFilter);
         }
         catch (Exception e)
         {

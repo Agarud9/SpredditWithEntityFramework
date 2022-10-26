@@ -61,4 +61,43 @@ public class PostHttpClient : IPostService
         
         return post;
     }
+    
+    public async Task<IEnumerable<Post>> GetAllPostsAsync()
+    {
+        string uri = "/post";
+        HttpResponseMessage response = await client.GetAsync(uri);
+        string result = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+
+        IEnumerable<Post> posts = JsonSerializer.Deserialize<IEnumerable<Post>>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return posts;
+    }
+
+    public async Task<IEnumerable<Post>> GetPostsByUserAsync(String? username)
+    {
+        string query = $"/post/?username={username}";
+        HttpResponseMessage response = await client.GetAsync(query);
+        string result = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+
+        IEnumerable<Post> posts = JsonSerializer.Deserialize<IEnumerable<Post>>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return posts;
+    }
+
+    public Task<Post> GetPostByIdAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
 }

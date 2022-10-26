@@ -11,6 +11,5 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7031") }); // webapi url
 
 builder.Services.AddScoped<IPostService, PostHttpClient>();
-builder.Services.AddScoped<IAllPostsService, AllPostsHttpClient>();
 
 await builder.Build().RunAsync();
