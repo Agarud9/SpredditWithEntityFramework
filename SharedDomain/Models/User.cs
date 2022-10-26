@@ -11,7 +11,7 @@ public class User
     public User()
     {
     }
-        
+
     public User(string username, string password, DateTime date)
     {
         Username = username;

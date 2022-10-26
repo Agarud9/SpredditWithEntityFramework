@@ -70,4 +70,13 @@ public class PostDaoImpl : IPostDao
         
         return Task.FromResult(posts);
     }
+
+    public Task<IEnumerable<Post>> GetByUserAsync(string username)
+    {
+        IEnumerable<Post> posts = context.Posts;
+
+        posts = posts.Where(p => p.user.Username == username);
+
+        return Task.FromResult(posts);
+    }
 }

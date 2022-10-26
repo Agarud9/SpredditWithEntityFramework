@@ -24,7 +24,7 @@ public class PostController : ControllerBase
         try
         {
             Post post = await postLogic.CreateAsync(dto);
-            return Created($"/posts/{post.id}", post);
+            return Created($"/post/{post.id}", post);
         }
         catch (Exception e)
         {
@@ -73,6 +73,21 @@ public class PostController : ControllerBase
         {
             Console.WriteLine(e);
             return BadRequest(e.Message);
+        }
+    }
+
+    [HttpGet("{username}")]
+    public async Task<ActionResult<Post>> GetByUsernameAsync([FromRoute] string username)
+    {
+        try
+        {
+            var posts = await postLogic.GetByUserAsync(username);
+            return Ok(posts);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
         }
     }
 }

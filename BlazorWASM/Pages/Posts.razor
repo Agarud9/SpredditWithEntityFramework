@@ -1,0 +1,107 @@
+﻿@page "/Posts"
+@using SharedDomain.Models
+@using HttpClients.ClientInterfaces
+@inject IAllPostsService allPostsService
+<h3>Here you can see all posts. Wooow!</h3>
+
+
+<div class="filter-bar">
+    <div class="filter-container">
+        <img src="icons/@(doShowFilters ? "clear_" : "")funnel.png"
+             class="funnel" @onclick="@(() => doShowFilters = !doShowFilters)" alt="Funnel"/>
+    
+        @if (doShowFilters)
+        {
+            <div class="filter">
+                <label>Username:</label>
+                <input type="text" @bind="postUserFilter"/>
+            </div>
+        }
+    </div>
+</div>
+
+<div>
+    <button @onClick="LoadTodos">Load</button>
+</div>
+
+@if (!string.IsNullOrEmpty(msg))
+{
+    <div>
+        <span>@msg</span>
+    </div>
+}
+
+@if (posts == null)
+{
+    
+}
+else if (!posts.Any())
+{
+    <p>No Posts to display. Sorry(((</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>User</th>
+            <th>Body</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var post in posts)
+        {
+            <tr>
+                <td>@post.id</td>
+                <td>@post.title</td>
+                <td>@post.user</td>
+                <td>@post.body</td>
+            </tr>
+            <tr>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+
+
+@code {
+    private IEnumerable<Post> posts;
+    private string msg = "";
+    private bool doShowFilters = false;
+
+    private string? postUserFilter;
+   
+
+    /*protected override async Task OnInitializedAsync()
+    {
+        msg = "";
+        try
+        {
+            posts = await allPostsService.GetAllPostsAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+    */
+
+    private async Task LoadTodos()
+    {
+        try
+        {
+            Console.WriteLine(posts);
+            posts = await allPostsService.GetPostsByUserAsync(postUserFilter);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+}
