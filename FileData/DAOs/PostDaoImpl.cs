@@ -38,7 +38,7 @@ public class PostDaoImpl : IPostDao
         return Task.FromResult(result);
     }
 
-    public Task<IEnumerable<Post>?> GetByTitleAsync(string title)
+    public Task<IEnumerable<Post>> GetByTitleAsync(string title)
     {
         IEnumerable<Post> posts = context.Posts.Where(p => p.title.Equals(title,StringComparison.OrdinalIgnoreCase));
         if (!posts.Any())
@@ -63,7 +63,7 @@ public class PostDaoImpl : IPostDao
         IEnumerable<Post> posts = context.Posts;
 
         if (title is not null)
-            posts = posts.Where(p => p.title.Equals(title, StringComparison.OrdinalIgnoreCase));
+            posts = posts.Where(p => p.title == title);
 
         if (username is not null)
             posts = posts.Where(p => p.user.Username == username);

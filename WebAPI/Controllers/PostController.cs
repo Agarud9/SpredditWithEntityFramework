@@ -34,7 +34,7 @@ public class PostController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Post>>> GetAll(string? title, string? username)
+    public async Task<ActionResult<IEnumerable<Post>>> GetAll([FromQuery]string? title, [FromQuery]string? username)
     {
         var filterParams = new PostFilterDTO
         {
@@ -75,7 +75,7 @@ public class PostController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    
     [HttpGet("{username}")]
     public async Task<ActionResult<Post>> GetByUsernameAsync([FromRoute] string username)
     {
@@ -96,7 +96,7 @@ public class PostController : ControllerBase
     {
         try
         {
-            Post post = await postLogic.GetByIdAsync(id);
+            Post? post = await postLogic.GetByIdAsync(id);
             return Ok(post);
         }
         catch (Exception e)

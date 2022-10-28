@@ -78,10 +78,11 @@ public class PostHttpClient : IPostService
         return posts;
     }
 
-    public async Task<IEnumerable<Post>> GetPostsByUserAsync(String? username)
+    public async Task<IEnumerable<Post>> GetPostsByFiltering(string? username, string? titleContains)
     {
-        string query = $"/post/?username={username}";
-        HttpResponseMessage response = await client.GetAsync(query);
+        string query = ConstructQuery(username, titleContains);
+        
+        HttpResponseMessage response = await client.GetAsync("/post" + query );
         string result = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -122,5 +123,23 @@ public class PostHttpClient : IPostService
             string result = await response.Content.ReadAsStringAsync();
             throw new Exception(result);
         }
+    }
+
+    private static string ConstructQuery(string? username, string? titleContains)
+    {
+        string query = "";
+        
+        if(!string.IsNullOrEmpty(username))
+        {
+            query += $"?username={username}";
+        }
+
+        if (!string.IsNullOrEmpty(titleContains))
+        {
+            query += string.IsNullOrEmpty(query) ? "?" : "&";
+            query += $"title={titleContains}";
+        }
+
+        return query;
     }
 }
