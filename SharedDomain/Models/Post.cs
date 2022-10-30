@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.Json;
 
 namespace SharedDomain.Models;
 
@@ -25,5 +26,10 @@ public class Post
         this.body = body;
         this.user = user;
         Votes = new List<Vote>();
+    }
+
+    public override string ToString()
+    {
+        return JsonSerializer.Serialize(this);
     }
 }
