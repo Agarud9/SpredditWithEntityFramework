@@ -91,6 +91,8 @@ public class PostController : ControllerBase
         }
     }
 
+    //TODO this is not working i have no clue why
+    /*
     [HttpGet("id:int")]
     public async Task<ActionResult<Post>> GetById([FromRoute] int id)
     {
@@ -105,4 +107,5 @@ public class PostController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    */
 }

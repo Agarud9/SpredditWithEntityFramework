@@ -25,10 +25,7 @@
 </div>
 
 <div>
-    <input type="button" @onclick="LoadTodos" value="Load"/>
-</div>
-<div>
-    Message = @msg
+    <input class="button" type="button" @onclick="LoadTodos" value="Load"/>
 </div>
 
 @if (!string.IsNullOrEmpty(msg))
@@ -59,7 +56,7 @@ else
             <tr>
                 <td>@post.id</td>
                 <td>@post.title</td>
-                <td>@post.user</td>
+                <td>@post.user.Username</td>
                 <td>@post.body</td>
             </tr>
             <tr>

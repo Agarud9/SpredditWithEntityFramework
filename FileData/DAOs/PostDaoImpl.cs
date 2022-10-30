@@ -63,7 +63,7 @@ public class PostDaoImpl : IPostDao
         IEnumerable<Post> posts = context.Posts;
 
         if (title is not null)
-            posts = posts.Where(p => p.title == title);
+            posts = posts.Where(p => p.title.Contains(title, StringComparison.OrdinalIgnoreCase));
 
         if (username is not null)
             posts = posts.Where(p => p.user.Username == username);
