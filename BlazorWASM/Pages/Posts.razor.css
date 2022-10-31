@@ -26,3 +26,8 @@ thead{
 .button{
     color: #0a53be;
 }
+
+.hoover:hover{
+    background-color: lightslategray;
+    cursor: pointer;
+}

@@ -114,15 +114,22 @@ public class PostHttpClient : IPostService
         return post;
     }
 
-    public async Task CreateAsync(PostCreationDTO dto)
+    public async Task<Post> CreateAsync(PostCreationDTO dto)
     {
         HttpResponseMessage response = await client.PostAsJsonAsync("/post", dto);
-
+        string result = await response.Content.ReadAsStringAsync();
+        
         if (!response.IsSuccessStatusCode)
         {
-            string result = await response.Content.ReadAsStringAsync();
+            
             throw new Exception(result);
         }
+        var post = JsonSerializer.Deserialize<Post>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return post;
     }
 
     private static string ConstructQuery(string? username, string? titleContains)

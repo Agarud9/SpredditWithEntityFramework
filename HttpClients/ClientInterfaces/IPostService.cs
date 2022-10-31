@@ -9,5 +9,5 @@ public interface IPostService
     Task<IEnumerable<Post>> GetAllPostsAsync();
     Task<IEnumerable<Post>> GetPostsByFiltering(string? username, string? titleContains);
     Task<Post> GetByIdAsync(int id);
-    Task CreateAsync(PostCreationDTO dto);
+    Task<Post> CreateAsync(PostCreationDTO dto);
 }

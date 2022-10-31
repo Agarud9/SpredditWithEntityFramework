@@ -2,6 +2,7 @@
 @using SharedDomain.Models
 @using HttpClients.ClientInterfaces
 @inject IPostService postService
+@inject NavigationManager navMgr
 <h3>Here you can see all posts. Wooow!</h3>
 
 
@@ -53,7 +54,7 @@ else
         <tbody>
         @foreach (var post in posts)
         {
-            <tr>
+            <tr @onclick="@(()=> navMgr.NavigateTo($"/Post/{post.id}"))" class="hoover">
                 <td>@post.id</td>
                 <td>@post.title</td>
                 <td>@post.user.Username</td>
