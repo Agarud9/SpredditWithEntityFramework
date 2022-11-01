@@ -28,6 +28,24 @@ public class UserLogic : IUserLogic
         return await dao.CreateUser(user);
     }
 
+    public async Task<UserToSendDTO> LogIn(string username, string password)
+    {
+        User? user = await dao.GetByUsernameAsync(username);
+        if (user == null)
+        {
+            throw new Exception($"The user {username} does not exist");
+        }
+
+        if (!user.Password.Equals(password))
+        {
+            throw new Exception("Incorrect password");
+        }
+
+        UserToSendDTO userToSendDto = new UserToSendDTO(user.Username);
+
+        return userToSendDto;
+    }
+
     private static void ValidateData(User user)
     {
         string username = user.Username;

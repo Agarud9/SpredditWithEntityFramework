@@ -1,4 +1,5 @@
 ﻿using Application.LogicIntrefaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedDomain.DTOs;
 using SharedDomain.Models;
@@ -16,6 +17,7 @@ public class CommentController : ControllerBase
         this.commentLogic = commentLogic;
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<Comment>> CreateAsync(CommentToSendDTO commentToCreate)
     {
