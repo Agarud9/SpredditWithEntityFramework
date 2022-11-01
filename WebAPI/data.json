@@ -71,6 +71,18 @@
       "id": 5,
       "VoteScore": 0,
       "Votes": []
+    },
+    {
+      "title": "A new post",
+      "body": "hellooo",
+      "user": {
+        "Username": "Agata",
+        "Password": "123123123",
+        "DateOfBirth": "2002-10-20T00:00:00"
+      },
+      "id": 6,
+      "VoteScore": 0,
+      "Votes": []
     }
   ],
   "Comments": [

@@ -1,4 +1,5 @@
 ﻿using Application.LogicIntrefaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedDomain.DTOs;
 using SharedDomain.Models;
@@ -7,6 +8,7 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+
 public class PostController : ControllerBase
 {
     private readonly IPostLogic postLogic;
@@ -18,6 +20,7 @@ public class PostController : ControllerBase
         this.voteLogic = voteLogic;
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<Post>> CreateAsync(PostCreationDTO dto)
     {
@@ -46,6 +49,7 @@ public class PostController : ControllerBase
         return Ok(posts);
     }
 
+    [Authorize]
     [HttpPost("{id:int}/upvote")]
     public async Task<IActionResult> UpVotePost(int id, [FromBody] VoteDTO voteDto)
     {
@@ -61,6 +65,7 @@ public class PostController : ControllerBase
         }
     }
     
+    [Authorize]
     [HttpPost("{id:int}/downvote")]
     public async Task<IActionResult> DownVotePost(int id, [FromBody] VoteDTO voteDto)
     {
@@ -91,9 +96,8 @@ public class PostController : ControllerBase
         }
     }
 
-    //TODO this is not working i have no clue why
-    /*
-    [HttpGet("id:int")]
+   
+    [HttpGet("{id:int}")]
     public async Task<ActionResult<Post>> GetById([FromRoute] int id)
     {
         try
@@ -107,5 +111,5 @@ public class PostController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-    */
+    
 }
