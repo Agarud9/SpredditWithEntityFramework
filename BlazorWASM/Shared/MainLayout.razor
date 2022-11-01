@@ -2,17 +2,18 @@
 
 
 <div class="page">
+    <link href="BlazorWASMPages.UIComponents.SimplePost.css" rel="stylesheet">
     <div class="sidebar">
         <NavMenu/>
     </div>
 
     <main>
         <div class="top-row">
-            <NavLink href="createPost">
+            <NavLink href="post/create">
                 <img src="CreatePost.png" class="createPostImg"/>
-                </NavLink>
+            </NavLink>
         </div>
-        
+
 
         <article class="content px-4">
             @Body

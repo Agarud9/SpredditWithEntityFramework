@@ -2,6 +2,7 @@
 @using SharedDomain.Models
 @using HttpClients.ClientInterfaces
 @using SharedDomain.DTOs
+@using UIComponents
 @inject IPostService postService
 
 <h3>ProfilePage</h3>
@@ -26,11 +27,7 @@ else
     <div>
         @foreach (Post post in posts)
         {
-            <div>
-                <div><h5>@post.title</h5></div>
-                <div><i>@post.user.Username</i></div>
-                <div>@post.body</div>
-            </div>
+            <SimplePost Id="@post.id" Title="@post.title" Username="@post.user.Username" VoteScore="@post.VoteScore"></SimplePost>
         }
     </div>
 }
@@ -51,4 +48,4 @@ else
             msg = e.Message;
         }
     }
-}
+};
