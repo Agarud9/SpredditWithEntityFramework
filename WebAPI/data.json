@@ -1,0 +1,120 @@
+{
+  "Users": [
+    {
+      "Username": "Agata",
+      "Password": "123123123",
+      "DateOfBirth": "2002-10-20T00:00:00"
+    }
+  ],
+  "Posts": [
+    {
+      "title": "Hello world",
+      "body": "What a beautiful day",
+      "user": {
+        "Username": "Agata",
+        "Password": "123123123",
+        "DateOfBirth": "2002-10-20T00:00:00"
+      },
+      "id": 1,
+      "VoteScore": 1,
+      "Votes": [
+        {
+          "Username": "Agata",
+          "Type": 1
+        }
+      ]
+    },
+    {
+      "title": "Good Night",
+      "body": "I am going to bed",
+      "user": {
+        "Username": "Agata",
+        "Password": "123123123",
+        "DateOfBirth": "2002-10-20T00:00:00"
+      },
+      "id": 2,
+      "VoteScore": 0,
+      "Votes": []
+    },
+    {
+      "title": "Good Night",
+      "body": "I am going to bed",
+      "user": {
+        "Username": "Agata",
+        "Password": "123123123",
+        "DateOfBirth": "2002-10-20T00:00:00"
+      },
+      "id": 3,
+      "VoteScore": 0,
+      "Votes": []
+    },
+    {
+      "title": "Life is good",
+      "body": "Good night",
+      "user": {
+        "Username": "Agata",
+        "Password": "123123123",
+        "DateOfBirth": "2002-10-20T00:00:00"
+      },
+      "id": 4,
+      "VoteScore": 0,
+      "Votes": []
+    },
+    {
+      "title": "hello",
+      "body": "its nice",
+      "user": {
+        "Username": "Agata",
+        "Password": "123123123",
+        "DateOfBirth": "2002-10-20T00:00:00"
+      },
+      "id": 5,
+      "VoteScore": 0,
+      "Votes": []
+    }
+  ],
+  "Comments": [
+    {
+      "Body": "Woow cool",
+      "Post": {
+        "title": "Hello world",
+        "body": "What a beautiful day",
+        "user": {
+          "Username": "Agata",
+          "Password": "123123123",
+          "DateOfBirth": "2002-10-20T00:00:00"
+        },
+        "id": 1,
+        "VoteScore": 0,
+        "Votes": []
+      },
+      "User": {
+        "Username": "Agata",
+        "Password": "123123123",
+        "DateOfBirth": "2002-10-20T00:00:00"
+      },
+      "Id": 1
+    },
+    {
+      "Body": "Woow cool",
+      "Post": {
+        "title": "Hello world",
+        "body": "What a beautiful day",
+        "user": {
+          "Username": "Agata",
+          "Password": "123123123",
+          "DateOfBirth": "2002-10-20T00:00:00"
+        },
+        "id": 1,
+        "VoteScore": 0,
+        "Votes": []
+      },
+      "User": {
+        "Username": "Agata",
+        "Password": "123123123",
+        "DateOfBirth": "2002-10-20T00:00:00"
+      },
+      "Id": 2
+    }
+  ]
+}

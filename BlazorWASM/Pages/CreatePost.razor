@@ -1,0 +1,57 @@
+﻿@page "/CreatePost"
+@using HttpClients.ClientInterfaces
+@using SharedDomain.DTOs
+@using SharedDomain.Models
+@inject IPostService postService
+@inject NavigationManager navMgr
+
+<div class="modal-background" style="display: block; height: 100%">
+<div class="modal-box">
+        <h4>Create Post</h4>
+        <div class="label">
+            <input style="font-size: 25px" type="text" @bind="title" placeholder="Title"/>
+        </div>
+    <div class="label">
+        <textarea class="body" @bind="body" placeholder="Tell us what do you thing about :)"></textarea>
+    </div>
+        <div class="label">
+            <input type="text" @bind="username" placeholder="Username"/>
+        </div>
+        @if (!string.IsNullOrEmpty(resultMsg))
+        {
+            <div class="label" style="text-align: center">
+                <label style="color:red">@resultMsg</label>
+            </div>
+        }
+                
+        <div class="button-row">
+            <button @onclick="Create" disabled="@(string.IsNullOrEmpty(title) && string.IsNullOrEmpty(body) && string.IsNullOrEmpty(username))" class="acceptbtn">Create</button>
+            <button @onclick="@(() => navMgr.NavigateTo("/posts"))" class="acceptbtn">Cancle</button>
+        </div>
+</div>
+</div>
+
+@code {
+    private string title = "";
+    private string body = "";
+    private string username = "";
+
+    private string resultMsg = "";
+
+    private async Task Create()
+    {
+        resultMsg = " ";
+
+        try
+        {
+            Post post = await postService.CreateAsync(new PostCreationDTO(title, body, username));
+            navMgr.NavigateTo($"/Post/{post.id}");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            resultMsg = e.Message;
+        }
+    }
+    }
+}
