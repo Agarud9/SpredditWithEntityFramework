@@ -28,6 +28,7 @@ else
         @foreach (Post post in posts)
         {
             <SimplePost Id="@post.id" Title="@post.title" Username="@post.user.Username" VoteScore="@post.VoteScore"></SimplePost>
+            <br/>
         }
     </div>
 }
