@@ -41,11 +41,11 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<UserToSendDTO>> LoginAsync( string username,  string password)
+    public async Task<ActionResult<UserToSendDTO>> LoginAsync( LoginDTO userToLogin)
     {
         try
         {
-            UserToSendDTO userToSendDto = await logic.LogIn(username, password);
+            UserToSendDTO userToSendDto = await logic.LogIn(userToLogin.Username, userToLogin.Password);
             string token = GenerateJwt(userToSendDto);
             
             return Ok(token);

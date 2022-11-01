@@ -5,31 +5,52 @@
 @inject IPostService postService
 @inject NavigationManager navMgr
 
-<div class="modal-background" style="display: block; height: 100%">
-<div class="modal-box">
-        <h4>Create Post</h4>
-        <div class="label">
-            <input style="font-size: 25px" type="text" @bind="title" placeholder="Title"/>
-        </div>
-    <div class="label">
-        <textarea class="body" @bind="body" placeholder="Tell us what do you thing about :)"></textarea>
-    </div>
-        <div class="label">
-            <input type="text" @bind="username" placeholder="Username"/>
-        </div>
-        @if (!string.IsNullOrEmpty(resultMsg))
-        {
-            <div class="label" style="text-align: center">
-                <label style="color:red">@resultMsg</label>
+
+<AuthorizeView>
+    <Authorized>
+        <div class="create-box-wrapper">
+            <div class="modal-background"></div>
+
+            <div class="modal-box">
+                <h4>Create Post</h4>
+                <div class="label">
+                    <input style="font-size: 25px" type="text" @bind="title" placeholder="Title"/>
+                </div>
+                <div class="label">
+                    <textarea class="body" @bind="body" placeholder="Tell us what do you thing about :)"></textarea>
+                </div>
+                <div class="label">
+                    <input type="text" @bind="username" placeholder="Username"/>
+                </div>
+                @if (!string.IsNullOrEmpty(resultMsg))
+                {
+                    <div class="label" style="text-align: center">
+                        <label style="color:red">@resultMsg</label>
+                    </div>
+                }
+
+                <div class="button-row">
+                    <button @onclick="Create" disabled="@(string.IsNullOrEmpty(title) && string.IsNullOrEmpty(body) && string.IsNullOrEmpty(username))" class="acceptbtn">Create</button>
+                    <button @onclick="@(() => navMgr.NavigateTo("/posts"))" class="acceptbtn">Cancle</button>
+                </div>
             </div>
-        }
-                
-        <div class="button-row">
-            <button @onclick="Create" disabled="@(string.IsNullOrEmpty(title) && string.IsNullOrEmpty(body) && string.IsNullOrEmpty(username))" class="acceptbtn">Create</button>
-            <button @onclick="@(() => navMgr.NavigateTo("/posts"))" class="acceptbtn">Cancle</button>
         </div>
-</div>
-</div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="create-box-wrapper">
+            <div class="modal-background"></div>
+            <div class="modal-box">
+                <div>
+                    <h5>Sorry, you have to be logged in to create a post :(</h5>
+                    <div class="button-row">
+                        <button @onclick="@(() => navMgr.NavigateTo("/posts"))" class="acceptbtn">Cancle</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </NotAuthorized>
+    
+</AuthorizeView>
 
 @code {
     private string title = "";

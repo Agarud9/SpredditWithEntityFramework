@@ -1,6 +1,15 @@
-﻿.modal-background { /* This style class makes the background darker, and un-clickable */
+﻿.create-box-wrapper{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.modal-background { /* This style class makes the background darker, and un-clickable */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: -1; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -14,10 +23,6 @@
 /* Modal Content/Box */
 .modal-box {
     background-color: #fefefe;
-    top: 30%;
-    left: 40%;
-    margin-top: -100px; /* Negative half of height. */
-    margin-left: -250px;
     padding: 20px;
     border: 1px solid #000000;
     /*display:inline-block;*/
@@ -25,7 +30,6 @@
     min-width: 300px;
     border-radius: 25px;
     box-shadow: 0 5px 30px 15px #3f3f3f;
-    position: fixed;
     text-align: center;
     
 }
