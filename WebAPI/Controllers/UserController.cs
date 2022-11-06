@@ -10,6 +10,10 @@ using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegiste
 
 namespace WebAPI.Controllers;
 
+/**
+ * Class responsible for handling incoming HTTP requests and send reponse back to the   
+ */
+
 [ApiController]
 [Route("[controller]")]
 public class UserController : ControllerBase
