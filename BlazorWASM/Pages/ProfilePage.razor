@@ -5,33 +5,40 @@
 @using UIComponents
 @inject IPostService postService
 
-<h3>ProfilePage</h3>
+<h3 class="profilePage">Profile Page</h3>
 
-@if (!string.IsNullOrEmpty(msg))
-{
-    <div>
-        <span>@msg</span>
-    </div>
-}
-
-@if (posts == null)
-{
-    <span>Loading..</span>
-}
-else if (!posts.Any())
-{
-    <span>No posts to be displayed</span>
-}
-else
-{
-    <div>
-        @foreach (Post post in posts)
+<AuthorizeView>
+    <Authorized>
+        @if (!string.IsNullOrEmpty(msg))
         {
-            <SimplePost Id="@post.id" Title="@post.title" Username="@post.user.Username" VoteScore="@post.VoteScore"></SimplePost>
-            <br/>
+            <div>
+                <span>@msg</span>
+            </div>
         }
-    </div>
-}
+
+        @if (posts == null)
+        {
+            <span>Loading..</span>
+        }
+        else if (!posts.Any())
+        {
+            <span>No posts to be displayed</span>
+        }
+        else
+        {
+            <div>
+                @foreach (Post post in posts)
+                {
+                    <SimplePost Id="@post.id" Title="@post.title" Username="@post.user.Username" VoteScore="@post.VoteScore"></SimplePost>
+                    <br/>
+                }
+            </div>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <h3>Please log in or register in order to view your profile page.</h3>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
     private IEnumerable<Post>? posts;
@@ -49,4 +56,4 @@ else
             msg = e.Message;
         }
     }
-};
+}

@@ -1,8 +1,6 @@
 ﻿@page "/Login"
-@using BlazorWASM.Auth
+@inject Auth.IAuthService authService
 @inject NavigationManager navMgr
-@inject IAuthService authService 
-
 
 <AuthorizeView>
     <NotAuthorized>
@@ -14,7 +12,7 @@
             </div>
             
             <div class="field">
-                <label>Password</label>
+                <label>Password:</label>
                 <input type="password" @bind="password"/>
             </div>
             @if (!string.IsNullOrEmpty(errorLabel))
@@ -33,28 +31,28 @@
     
     <Authorized>
         <div class="card">
-            <h3>Hello, @context.User.Identity.Name, welcome to Spreddit!</h3>
+            <h3>Hello, @context.User.Identity?.Name, welcome to Spreddit!</h3>
         </div>
     </Authorized>
 </AuthorizeView>
 
 @code {
-    private string userName;
-    private string password;
-    private string errorLabel;
+    private string? userName;
+    private string? password;
+    private string? errorLabel;
 
-    private async Task LoginAsync()
+    public async Task LoginAsync()
     {
         errorLabel = "";
         try
         {
-            authService.LoginAsync(userName, password);
+            if (userName != null && password != null) await authService.LoginAsync(userName, password);
             navMgr.NavigateTo("/ProfilePage");
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            errorLabel = $"Error: {e.Message}";
+            errorLabel = $"Error: {e}";
         }
     }
 }

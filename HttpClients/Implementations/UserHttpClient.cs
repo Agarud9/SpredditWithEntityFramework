@@ -23,7 +23,7 @@ public class UserHttpClient : IUserService
     
     public async Task LoginAsync(string username, string password)
     {
-        LoginDTO user = new(username, password);
+        LoginDTO user = new LoginDTO(username, password);
 
         string userAsJson = JsonSerializer.Serialize(user);
         StringContent content = new(userAsJson, Encoding.UTF8, "application/json");

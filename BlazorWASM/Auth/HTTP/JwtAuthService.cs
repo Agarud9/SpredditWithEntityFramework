@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
+using System.Text;
 using System.Text.Json;
-using Microsoft.AspNetCore.Authorization;
+using SharedDomain.DTOs;
 using SharedDomain.Models;
 
 namespace BlazorWASM.Auth.HTTP;
@@ -10,6 +11,49 @@ public class JwtAuthService : IAuthService
     private readonly HttpClient client = new();
     public static string? Jwt { get; private set; } = "";
     
+    public async Task LoginAsync(string username, string password)
+    {
+        LoginDTO user = new LoginDTO(username, password);
+
+        // User --> as json
+        string userAsJson = JsonSerializer.Serialize(user);
+        // Putting the json into a string content
+        StringContent content = new StringContent(userAsJson, Encoding.UTF8, "application/json");
+        
+        // Making a post request
+        HttpResponseMessage response = await client.PostAsync("https://localhost:7031/User/login", content);
+        // Reading the response content which is should be a JWT
+        string responseContent = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            Console.WriteLine(responseContent);
+            throw new Exception(responseContent);
+        }
+        
+        string token = responseContent;
+        Jwt = token;
+        
+        
+        ClaimsPrincipal principal = CreateClaimsPrincipal();
+        OnAuthStateChanged?.Invoke(principal);
+    }
+    
+    private static ClaimsPrincipal CreateClaimsPrincipal()
+    {
+        if (string.IsNullOrEmpty(Jwt))
+        {
+            return new ClaimsPrincipal();
+        }
+
+        IEnumerable<Claim> claims = ParseClaimsFromJwt(Jwt);
+    
+        ClaimsIdentity identity = new(claims, "jwt");
+
+        ClaimsPrincipal principal = new(identity);
+        return principal;
+    }
+
     private static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
     {
         string payload = jwt.Split('.')[1];
@@ -32,26 +76,7 @@ public class JwtAuthService : IAuthService
 
         return Convert.FromBase64String(base64);
     }
-    
-    private static ClaimsPrincipal CreateClaimsPrincipal()
-    {
-        if (string.IsNullOrEmpty(Jwt))
-        {
-            return new ClaimsPrincipal();
-        }
 
-        IEnumerable<Claim> claims = ParseClaimsFromJwt(Jwt);
-    
-        ClaimsIdentity identity = new(claims, "jwt");
-
-        ClaimsPrincipal principal = new(identity);
-        return principal;
-    }
-
-    public Task LoginAsync(string username, string password)
-    {
-        throw new NotImplementedException();
-    }
 
     public Task LogoutAsync()
     {
@@ -65,8 +90,11 @@ public class JwtAuthService : IAuthService
 
     public Task<ClaimsPrincipal> GetAuthAsync()
     {
-        throw new NotImplementedException();
+        ClaimsPrincipal principal = CreateClaimsPrincipal();
+        return Task.FromResult(principal);
     }
 
+    // Method that will fire an event whenever the authentication state changes
+    // upon a log in or log out
     public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; }
 }

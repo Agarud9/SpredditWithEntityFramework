@@ -10,11 +10,11 @@
 
 .field {
     margin-top: 20px;
-    transition:0.2s;
+    transition:0.5s;
 }
 
 .loginbtn {
-    background-color:dimgray;
+    background-color: #CDCDCD;
     border-radius: 5px;
     padding: 5px;
     padding-left: 10px;
@@ -24,4 +24,8 @@
 .loginbtn:hover{
     transform: scale(1.1);
     box-shadow: 0 2px 10px 2px #3f3f3f;
+}
+
+input{
+    border-radius: 10px;
 }

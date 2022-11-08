@@ -19,12 +19,20 @@
 
     private void Login()
     {
-        navMgr.NavigateTo("/Login");
+        try
+        {
+            navMgr.NavigateTo("/Login");
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        
     }
 
     private async Task Logout()
     {
-        authService.LogoutAsync();
+        await authService.LogoutAsync();
         navMgr.NavigateTo("/");
     }
 }

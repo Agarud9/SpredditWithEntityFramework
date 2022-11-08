@@ -4,6 +4,11 @@
       "Username": "Agata",
       "Password": "123123123",
       "DateOfBirth": "2002-10-20T00:00:00"
+    },
+    {
+      "Username": "bety1",
+      "Password": "123456789",
+      "DateOfBirth": "2002-11-06T00:00:00"
     }
   ],
   "Posts": [
