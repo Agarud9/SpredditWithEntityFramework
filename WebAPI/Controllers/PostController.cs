@@ -51,7 +51,7 @@ public class PostController : ControllerBase
 
     [Authorize]
     [HttpPost("{id:int}/upvote")]
-    public async Task<IActionResult> UpVotePost(int id, [FromBody] VoteDTO voteDto)
+    public async Task<IActionResult> UpVotePost([FromRoute]int id, [FromBody] VoteDTO voteDto)
     {
         try
         {
@@ -67,7 +67,7 @@ public class PostController : ControllerBase
     
     [Authorize]
     [HttpPost("{id:int}/downvote")]
-    public async Task<IActionResult> DownVotePost(int id, [FromBody] VoteDTO voteDto)
+    public async Task<IActionResult> DownVotePost([FromRoute]int id, [FromBody] VoteDTO voteDto)
     {
         try
         {
@@ -111,5 +111,36 @@ public class PostController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpGet("{id:int}/upvotes")]
+    public async Task<ActionResult<int>> GetAllUpVote([FromRoute] int id)
+    {
+        try
+        {
+            int number = await voteLogic.GetNumberOfUpVote(id);
+            return Created($"/upVotes", number);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }   
+    }
+    
+    [HttpGet("{id:int}/downvotes")]
+    public async Task<ActionResult<int>> GetAllDownVote([FromRoute] int id)
+    {
+        try
+        {
+            int number = await voteLogic.GetNumberOgDownVote(id);
+            return Created($"/upVotes", number);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }   
+    }
+    
     
 }

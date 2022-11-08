@@ -27,4 +27,40 @@ public class VoteDao : IVoteDao
         
         return Task.CompletedTask;
     }
+
+    public Task<int> GetNumberOfUpVote(int id)
+    {
+        int number = 0;
+        
+        Post? post = fileContext.Posts.FirstOrDefault(p => p.id == id);
+        List<Vote>? votes = new List<Vote>(post.Votes);
+
+        for (int i = 0; i < votes.Count; i++)
+        {
+            if (votes[i].Type == VoteType.UpVote)
+            {
+                number++;
+            }
+        }
+
+        return Task.FromResult(number);
+    }
+
+    public Task<int> GetNumberOgDownVote(int id)
+    {
+        int number = 0;
+        
+        Post? post = fileContext.Posts.FirstOrDefault(p => p.id == id);
+        List<Vote>? votes = new List<Vote>(post.Votes);
+
+        for (int i = 0; i < votes.Count; i++)
+        {
+            if (votes[i].Type == VoteType.DownVote)
+            {
+                number++;
+            }
+        }
+
+        return Task.FromResult(number);
+    }
 }

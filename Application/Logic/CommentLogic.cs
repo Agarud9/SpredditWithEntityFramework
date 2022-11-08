@@ -34,8 +34,13 @@ public class CommentLogic : ICommentLogic
             throw new Exception($"Post with id: {comment.PostId} doesn't exist");
         }
 
-        Comment commentToCreate = new Comment(comment.Comment, post, user);
+        Comment commentToCreate = new Comment(comment.Comment, post, comment.Username);
         Comment created = await commentDao.CreateAsync(commentToCreate);
         return created;
+    }
+
+    public async Task<IEnumerable<Comment>> GetAll(int id)
+    {
+        return await commentDao.GetAll(id);
     }
 }

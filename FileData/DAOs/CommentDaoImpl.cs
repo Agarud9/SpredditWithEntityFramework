@@ -28,4 +28,21 @@ public class CommentDaoImpl : ICommentDao
         
         return Task.FromResult(comment);
     }
+
+    public Task<IEnumerable<Comment>> GetAll(int id)
+    {
+        Post post = context.Posts.First(post => post.id == id);
+        List<Comment> comments = new List<Comment>();
+        foreach (var comment in context.Comments)
+        {
+            if (comment.Post == post)
+            {
+                comments.Add(comment);
+            }
+        }
+
+        IEnumerable<Comment> allComments = comments;
+
+        return Task.FromResult(allComments);
+    }
 }

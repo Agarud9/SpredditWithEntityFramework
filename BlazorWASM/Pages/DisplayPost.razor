@@ -1,7 +1,77 @@
 ﻿@page "/Post/{id:int}"
-<h3>OnePost</h3>
+@using HttpClients.ClientInterfaces
+@using SharedDomain.DTOs
+@using SharedDomain.Models
+@inject IPostService postService
+
+<AuthorizeView>
+    <NotAuthorized>
+        <div class="main">
+            <div class="postBox">
+                <label class="titleLabel">@post.title</label>
+                <div class="middle">
+                    <textarea>@post.body</textarea>
+                    </div>
+                <div class="forvoating">
+                    <div class="votes">
+                        <img src="upVote.png" @onclick="UpVote"/>
+                    </div>
+                    <div class="votes">
+                        <label>@upVotes</label>
+                    </div>
+                    <div class="votes">
+                         <label>@downVote</label>
+                    </div>
+                    <div class="votes">
+                        <img src="downVote.png" @onclick="DownVote"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </NotAuthorized>
+</AuthorizeView>
+
 
 @code {
     [Parameter]
     public int Id { get; set; }
-}
+    
+    private Post post = null;
+    private int upVotes { get; set; }
+    private int downVote { get; set; }
+    private IEnumerable<Comment>? comments;
+
+    private string msg = "";
+    
+    protected override async Task OnInitializedAsync()
+    {
+        msg = "";
+        try
+        {
+            post = await postService.GetByIdAsync(Id);
+            upVotes = await postService.GetNumberOfUpVotes(Id);
+            downVote = await postService.GetNumberOfDownVotes(Id);
+            comments = await postService.GetAllComments(Id);
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    } 
+    private async Task UpVote()
+    {
+       // await postService.UpVote(Id);
+        await OnInitializedAsync();
+    }
+    
+    private async Task DownVote()
+    {
+        //await postService.DownVote(Id);
+        await OnInitializedAsync();
+    }
+    
+    
+    }

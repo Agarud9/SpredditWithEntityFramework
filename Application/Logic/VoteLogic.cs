@@ -28,6 +28,16 @@ public class VoteLogic : IVoteLogic
     /// <inheritdoc/>
     public async Task DownVote(int postId, VoteDTO dto) => await VoteAsync(postId, dto, VoteType.DownVote);
 
+    public async Task<int> GetNumberOfUpVote(int id)
+    {
+        return await voteDao.GetNumberOfUpVote(id);
+    }
+
+    public  async Task<int> GetNumberOgDownVote(int id)
+    {
+        return await voteDao.GetNumberOgDownVote(id);
+    }
+
     /// <summary>
     /// Places a vote on a post
     /// </summary>

@@ -22,4 +22,7 @@ public interface IVoteLogic
     /// <param name="dto"></param>
     /// <returns>A task that represents the downvote.</returns>
     public Task DownVote(int postId, VoteDTO dto);
+
+    public Task<int> GetNumberOfUpVote(int id);
+    public Task<int> GetNumberOgDownVote(int id);
 }

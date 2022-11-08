@@ -96,11 +96,7 @@
       "Post": {
         "title": "Hello world",
         "body": "What a beautiful day",
-        "user": {
-          "Username": "Agata",
-          "Password": "123123123",
-          "DateOfBirth": "2002-10-20T00:00:00"
-        },
+        "Username": "Agata",
         "id": 1,
         "VoteScore": 0,
         "Votes": []

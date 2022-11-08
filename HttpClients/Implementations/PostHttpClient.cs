@@ -132,6 +132,97 @@ public class PostHttpClient : IPostService
         return post;
     }
 
+    public async Task<int> GetNumberOfUpVotes(int id)
+    {
+        HttpResponseMessage response = await client.GetAsync($"/post/{id}/upvotes");
+        string result = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        var number = JsonSerializer.Deserialize<int>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return number;
+    }
+
+    public async Task<int> GetNumberOfDownVotes(int id)
+    {
+        HttpResponseMessage response = await client.GetAsync($"/post/{id}/downvotes");
+        string result = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        var number = JsonSerializer.Deserialize<int>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return number;
+    }
+
+    public  async Task<IEnumerable<Comment>?> GetAllComments(int id)
+    {
+        HttpResponseMessage response = await client.GetAsync($"/comment/{id}");
+        string result = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        var comments = JsonSerializer.Deserialize<IEnumerable<Comment>>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return comments;
+    }
+
+    public async Task<Comment> CommentPost(CommentToSendDTO dto)
+    {
+        HttpResponseMessage response = await client.PostAsJsonAsync("/comment",dto);
+        string result = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        var comment = JsonSerializer.Deserialize<Comment>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return comment;
+    }
+
+    public async Task UpVote(int id, VoteDTO dto)
+    {
+        HttpResponseMessage response = await client.PostAsJsonAsync("/post/id/upvote",dto);
+        string result = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        
+    }
+
+    public async Task DownVote(int id, VoteDTO dto)
+    {
+        HttpResponseMessage response = await client.PostAsJsonAsync("/post/id/downvote",dto);
+        string result = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+    }
+
     private static string ConstructQuery(string? username, string? titleContains)
     {
         string query = "";

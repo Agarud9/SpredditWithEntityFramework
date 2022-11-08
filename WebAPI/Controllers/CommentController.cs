@@ -33,4 +33,19 @@ public class CommentController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<IEnumerable<Comment>>> GetAll([FromRoute] int id)
+    {
+        try
+        {
+            IEnumerable<Comment> comments = await commentLogic.GetAll(id);
+            return Created($"/comments", comments);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }   
+    }
  }
