@@ -20,4 +20,8 @@
       <_ContentIncludedByDefault Remove="Pages\UiComponent\CreatePost.razor" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Remove="wwwroot\750-7506545_upvote-downvote-49347-hd-png-download.png" />
+    </ItemGroup>
+
 </Project>

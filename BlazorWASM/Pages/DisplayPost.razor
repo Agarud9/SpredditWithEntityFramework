@@ -2,45 +2,76 @@
 @using HttpClients.ClientInterfaces
 @using SharedDomain.DTOs
 @using SharedDomain.Models
+@using System.Security.Claims
 @inject IPostService postService
 
-<AuthorizeView>
-    <NotAuthorized>
-        <div class="main">
-            <div class="postBox">
-                <label class="titleLabel">@post.title</label>
-                <div class="middle">
-                    <textarea>@post.body</textarea>
-                    </div>
-                <div class="forvoating">
-                    <div class="votes">
-                        <img src="upVote.png" @onclick="UpVote"/>
-                    </div>
-                    <div class="votes">
-                        <label>@upVotes</label>
-                    </div>
-                    <div class="votes">
-                         <label>@downVote</label>
-                    </div>
-                    <div class="votes">
-                        <img src="downVote.png" @onclick="DownVote"/>
-                    </div>
-                </div>
+@if (post != null)
+{
+    <div class="main">
+        <div class="column">
+            <span class="titleLabel">@post.title</span>
+            <div class="middle">
+                <textarea readonly>@post.body</textarea>
             </div>
         </div>
-        
-    </NotAuthorized>
-</AuthorizeView>
+        <div class="column">
+            <div class>
+                <button @onclick="UpVote">
+                    <img src="upVote.png"/>
+                </button>
+            </div>
+            <div>
+                <label>@upVotes</label>
+            </div>
+            <div>
+                <label>@downVote</label>
+            </div>
+            <div >
+                <button @onclick="DownVote">
+                    <img src="downVote.png"/>
+                </button>
+            </div>
+        </div>
+        <div class="column">
+           @if (IsLogged)
+           {
+                <div class="writeComment">
+                    <input style="width: 80%" type="text" @bind="Comment" placeholder="Write a comment"/>
+                    <button @onclick="WriteComment" >Post</button>
+                    </div>
+           }
+           <div class="displayComments">
+               @foreach (var comment in comments)
+               {
+                   <div class="comment">
+                       <div class="username">@comment.Username</div>
+                       <div class="body">@comment.Body</div>
+                   </div>
+               }
+           </div>
+        </div>
+       
+            </div>
+}
+else
+{
+    <span>Post could not be found</span>
+}
 
 
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
     [Parameter]
     public int Id { get; set; }
-    
-    private Post post = null;
+
+    private Post post { get; set; }
     private int upVotes { get; set; }
     private int downVote { get; set; }
     private IEnumerable<Comment>? comments;
+    private string? Username { get; set; }
+    private bool IsLogged => Username is not null; 
+    private string Comment { get; set; }
 
     private string msg = "";
     
@@ -52,8 +83,11 @@
             post = await postService.GetByIdAsync(Id);
             upVotes = await postService.GetNumberOfUpVotes(Id);
             downVote = await postService.GetNumberOfDownVotes(Id);
-            comments = await postService.GetAllComments(Id);
-
+            comments = (await postService.GetAllComments(Id)).Reverse();
+            
+            var authState = await AuthenticationStateTask;
+            ClaimsPrincipal principal = authState.User;
+            Username = (from claim in principal.Claims where claim.Type == "Username" select claim.Value).FirstOrDefault();
         }
         catch (Exception e)
         {
@@ -63,15 +97,38 @@
     } 
     private async Task UpVote()
     {
-       // await postService.UpVote(Id);
+        if(!IsLogged)
+            return;
+        VoteDTO dto = new VoteDTO
+        {
+            Username = Username
+        };
+        await postService.UpVote(Id,dto);
         await OnInitializedAsync();
     }
     
     private async Task DownVote()
     {
-        //await postService.DownVote(Id);
+        if(!IsLogged)
+        return;
+        VoteDTO dto = new VoteDTO
+        {
+            Username = Username
+        };
+        await postService.DownVote(Id,dto);
         await OnInitializedAsync();
     }
-    
+
+    private async Task WriteComment()
+    {
+        if (string.IsNullOrWhiteSpace(Comment))
+        {
+            return;
+        }
+        CommentToSendDTO comment = new CommentToSendDTO(Comment, Username, Id);
+        await postService.CommentPost(comment);
+        Comment = "";
+        await OnInitializedAsync();
+    }
     
     }

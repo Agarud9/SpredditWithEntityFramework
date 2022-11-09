@@ -121,7 +121,6 @@ public class PostHttpClient : IPostService
         
         if (!response.IsSuccessStatusCode)
         {
-            
             throw new Exception(result);
         }
         var post = JsonSerializer.Deserialize<Post>(result, new JsonSerializerOptions
@@ -202,19 +201,20 @@ public class PostHttpClient : IPostService
 
     public async Task UpVote(int id, VoteDTO dto)
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/post/id/upvote",dto);
+        HttpResponseMessage response = await client.PostAsJsonAsync($"/post/{id}/upvote",dto);
         string result = await response.Content.ReadAsStringAsync();
         
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception(result);
+            Console.WriteLine("StatusCode = " + response.StatusCode);
+            throw new Exception(response.StatusCode + "" + result);
         }
         
     }
 
     public async Task DownVote(int id, VoteDTO dto)
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/post/id/downvote",dto);
+        HttpResponseMessage response = await client.PostAsJsonAsync($"/post/{id}/downvote",dto);
         string result = await response.Content.ReadAsStringAsync();
         
         if (!response.IsSuccessStatusCode)

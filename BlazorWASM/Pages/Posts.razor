@@ -1,6 +1,7 @@
 ﻿@page "/Posts"
 @using SharedDomain.Models
 @using HttpClients.ClientInterfaces
+@using UIComponents
 @inject IPostService postService
 @inject NavigationManager navMgr
 <h3>Here you can see all posts. Wooow!</h3>
@@ -42,29 +43,12 @@ else if (!posts.Any())
 }
 else
 {
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>User</th>
-            <th>Body</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var post in posts)
-        {
-            <tr @onclick="@(()=> navMgr.NavigateTo($"/Post/{post.id}"))" class="hoover">
-                <td>@post.id</td>
-                <td>@post.title</td>
-                <td>@post.user.Username</td>
-                <td>@post.body</td>
-            </tr>
-            <tr>
-            </tr>
-        }
-        </tbody>
-    </table>
+    <br/><br/><br/>
+    @foreach (var post in posts)
+    {
+        <SimplePost Id="@post.id" Title="@post.title" Username="@post.user.Username" VoteScore="@post.VoteScore"></SimplePost>
+        <br/>
+    }
 }
 
 

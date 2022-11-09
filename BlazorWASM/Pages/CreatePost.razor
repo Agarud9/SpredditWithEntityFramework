@@ -2,6 +2,7 @@
 @using HttpClients.ClientInterfaces
 @using SharedDomain.DTOs
 @using SharedDomain.Models
+@using System.Security.Claims
 @inject IPostService postService
 @inject NavigationManager navMgr
 
@@ -19,9 +20,6 @@
                 <div class="label">
                     <textarea class="body" @bind="body" placeholder="Tell us what do you thing about :)"></textarea>
                 </div>
-                <div class="label">
-                    <input type="text" @bind="username" placeholder="Username"/>
-                </div>
                 @if (!string.IsNullOrEmpty(resultMsg))
                 {
                     <div class="label" style="text-align: center">
@@ -30,7 +28,7 @@
                 }
 
                 <div class="button-row">
-                    <button @onclick="Create" disabled="@(string.IsNullOrEmpty(title) && string.IsNullOrEmpty(body) && string.IsNullOrEmpty(username))" class="acceptbtn">Create</button>
+                    <button @onclick="Create" disabled="@(string.IsNullOrEmpty(title) && string.IsNullOrEmpty(body))" class="acceptbtn">Create</button>
                     <button @onclick="@(() => navMgr.NavigateTo("/posts"))" class="acceptbtn">Cancle</button>
                 </div>
             </div>
@@ -53,19 +51,26 @@
 </AuthorizeView>
 
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    
     private string title = "";
     private string body = "";
-    private string username = "";
+    private string Username { get; set; }
 
     private string resultMsg = "";
 
     private async Task Create()
     {
-        resultMsg = " ";
+        
+        var authState = await AuthenticationStateTask;
+        ClaimsPrincipal principal = authState.User;
+        Username = (from claim in principal.Claims where claim.Type == "Username" select claim.Value).FirstOrDefault();
+        resultMsg = "";
 
         try
         {
-            Post post = await postService.CreateAsync(new PostCreationDTO(title, body, username));
+            Post post = await postService.CreateAsync(new PostCreationDTO(title, body, Username));
             navMgr.NavigateTo($"/Post/{post.id}");
         }
         catch (Exception e)
@@ -74,5 +79,5 @@
             resultMsg = e.Message;
         }
     }
-    }
+    
 }

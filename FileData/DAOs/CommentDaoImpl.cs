@@ -29,13 +29,13 @@ public class CommentDaoImpl : ICommentDao
         return Task.FromResult(comment);
     }
 
-    public Task<IEnumerable<Comment>> GetAll(int id)
+    public Task<IEnumerable<Comment>> GetAllByPostId(int id)
     {
         Post post = context.Posts.First(post => post.id == id);
         List<Comment> comments = new List<Comment>();
         foreach (var comment in context.Comments)
         {
-            if (comment.Post == post)
+            if (comment.Post.id == post.id)
             {
                 comments.Add(comment);
             }

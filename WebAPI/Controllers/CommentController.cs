@@ -17,7 +17,6 @@ public class CommentController : ControllerBase
         this.commentLogic = commentLogic;
     }
 
-    [Authorize]
     [HttpPost]
     public async Task<ActionResult<Comment>> CreateAsync(CommentToSendDTO commentToCreate)
     {
@@ -39,8 +38,8 @@ public class CommentController : ControllerBase
     {
         try
         {
-            IEnumerable<Comment> comments = await commentLogic.GetAll(id);
-            return Created($"/comments", comments);
+            IEnumerable<Comment> comments = await commentLogic.GetAllByPostId(id);
+            return Ok(comments);
         }
         catch (Exception e)
         {

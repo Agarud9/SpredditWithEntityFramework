@@ -39,8 +39,8 @@ public class CommentLogic : ICommentLogic
         return created;
     }
 
-    public async Task<IEnumerable<Comment>> GetAll(int id)
+    public async Task<IEnumerable<Comment>> GetAllByPostId(int id)
     {
-        return await commentDao.GetAll(id);
+        return await commentDao.GetAllByPostId(id);
     }
 }

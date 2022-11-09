@@ -16,8 +16,6 @@ public class UserHttpClient : IUserService
         this.client = client;
     }
 
-
-    public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
     
     public async Task<string> LoginAsync(LoginDTO dto)
     {

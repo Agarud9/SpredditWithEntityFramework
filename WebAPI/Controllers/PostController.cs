@@ -20,7 +20,6 @@ public class PostController : ControllerBase
         this.voteLogic = voteLogic;
     }
 
-    [Authorize]
     [HttpPost]
     public async Task<ActionResult<Post>> CreateAsync(PostCreationDTO dto)
     {
@@ -49,7 +48,6 @@ public class PostController : ControllerBase
         return Ok(posts);
     }
 
-    [Authorize]
     [HttpPost("{id:int}/upvote")]
     public async Task<IActionResult> UpVotePost([FromRoute]int id, [FromBody] VoteDTO voteDto)
     {
@@ -65,7 +63,7 @@ public class PostController : ControllerBase
         }
     }
     
-    [Authorize]
+   
     [HttpPost("{id:int}/downvote")]
     public async Task<IActionResult> DownVotePost([FromRoute]int id, [FromBody] VoteDTO voteDto)
     {
