@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using System.Text;
 using System.Text.Json;
 using HttpClients.ClientInterfaces;
 using SharedDomain.DTOs;
@@ -84,9 +83,7 @@ public class JwtAuthService : IAuthService
         return Convert.FromBase64String(base64);
     }
 
-
     
-
     public Task<ClaimsPrincipal> GetAuthAsync()
     {
         ClaimsPrincipal principal = CreateClaimsPrincipal();

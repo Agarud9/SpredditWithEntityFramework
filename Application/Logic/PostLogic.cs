@@ -37,16 +37,6 @@ public class PostLogic : IPostLogic
         return created;
     }
 
-    public Task<IEnumerable<Post>> GetAllAsync()
-    {
-        return postDao.GetAllAsync();
-    }
-
-    public async Task<IEnumerable<Post>?> GetByTitleAsync(string title)
-    {
-        return await postDao.GetByTitleAsync(title);
-    }
-
     public async Task<IEnumerable<Post>> GetByParameterAsync(PostFilterDTO dto)
     {
         return await postDao.GetByParameterAsync(dto);

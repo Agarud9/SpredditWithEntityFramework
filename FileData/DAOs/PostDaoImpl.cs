@@ -30,25 +30,6 @@ public class PostDaoImpl : IPostDao
 
         return Task.FromResult(post);
     }
-
-    public Task<IEnumerable<Post>> GetAllAsync()
-    {
-        IEnumerable<Post> result = context.Posts.AsEnumerable();
-
-        return Task.FromResult(result);
-    }
-
-    public Task<IEnumerable<Post>> GetByTitleAsync(string title)
-    {
-        IEnumerable<Post> posts = context.Posts.Where(p => p.title.Equals(title,StringComparison.OrdinalIgnoreCase));
-        if (!posts.Any())
-        {
-            throw new Exception($"Post with title: {title} doesn't exist");
-        }
-
-        return Task.FromResult(posts);
-    }
-
     public Task<Post?> GetByIdAsync(int id)
     {
         Post? post = context.Posts.FirstOrDefault(p => p.id == id);

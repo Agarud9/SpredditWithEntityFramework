@@ -56,7 +56,7 @@
     
     private string title = "";
     private string body = "";
-    private string Username { get; set; }
+    private string username { get; set; }
 
     private string resultMsg = "";
 
@@ -65,12 +65,12 @@
         
         var authState = await AuthenticationStateTask;
         ClaimsPrincipal principal = authState.User;
-        Username = (from claim in principal.Claims where claim.Type == "Username" select claim.Value).FirstOrDefault();
+        username = (from claim in principal.Claims where claim.Type == "Username" select claim.Value).FirstOrDefault();
         resultMsg = "";
 
         try
         {
-            Post post = await postService.CreateAsync(new PostCreationDTO(title, body, Username));
+            Post post = await postService.CreateAsync(new PostCreationDTO(title, body, username));
             navMgr.NavigateTo($"/Post/{post.id}");
         }
         catch (Exception e)
