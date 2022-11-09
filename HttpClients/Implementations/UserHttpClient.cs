@@ -59,7 +59,6 @@ public class UserHttpClient : IUserService
 
     public Task<ClaimsPrincipal> GetAuthAsync()
     {
-        
         ClaimsPrincipal principal = CreateClaimsPrincipal();
         return Task.FromResult(principal);
     }

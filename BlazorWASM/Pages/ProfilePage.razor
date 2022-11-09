@@ -9,6 +9,8 @@
 
 <AuthorizeView>
     <Authorized>
+        
+        <h1>Hello @context.User.Identity.Name</h1>
         @if (!string.IsNullOrEmpty(msg))
         {
             <div>
