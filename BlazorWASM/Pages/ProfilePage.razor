@@ -3,14 +3,17 @@
 @using HttpClients.ClientInterfaces
 @using SharedDomain.DTOs
 @using UIComponents
+@using System.Security.Claims
 @inject IPostService postService
+@inject AuthenticationStateProvider GetAuthenticationStateAsync
 
 <h3 class="profilePage">Profile Page</h3>
 
 <AuthorizeView>
     <Authorized>
         
-        <h1>Hello @context.User.Identity.Name</h1>
+        <h1>Hello @username</h1>
+        
         @if (!string.IsNullOrEmpty(msg))
         {
             <div>
@@ -45,12 +48,17 @@
 @code {
     private IEnumerable<Post>? posts;
     private string msg = "";
+    private string? username = null;
     
     protected override async Task OnInitializedAsync()
     {
+        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+        var principal = authstate.User;
+        username = (from claim in principal.Claims where claim.Type == "Username" select claim.Value).FirstOrDefault();
+
         try
         {
-            posts = await postService.GetAsync(new PostFilterDTO{Username = ""});
+            posts = await postService.GetAsync(new PostFilterDTO{Username = username});
         }
         catch (Exception e)
         {

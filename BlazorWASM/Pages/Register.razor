@@ -2,6 +2,7 @@
 @using BlazorWASM.Auth
 @using SharedDomain.Models
 @inject IAuthService authService
+@inject NavigationManager NavManager
 
 <h3>Register</h3>
 
@@ -22,9 +23,10 @@
     </div>
     
     <div>
-        <input type="button" @onclick="Submit">
+        <input type="button" @onclick="Submit" value="Register">
     </div>
 
+    <span style="color: red">@errorMessage</span>
 </form>
 
 @code {
@@ -47,6 +49,8 @@
         try
         {
             await authService.RegisterAsync(user);
+            await Task.Delay(200);
+            NavManager.NavigateTo("/Login");
         }
         catch (Exception e)
         {

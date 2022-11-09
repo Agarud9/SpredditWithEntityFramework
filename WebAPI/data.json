@@ -9,6 +9,16 @@
       "Username": "bety1",
       "Password": "123456789",
       "DateOfBirth": "2002-11-06T00:00:00"
+    },
+    {
+      "Username": "eeeee",
+      "Password": "1",
+      "DateOfBirth": "2008-06-09T00:00:00"
+    },
+    {
+      "Username": "sgsgsg",
+      "Password": "2",
+      "DateOfBirth": "2008-11-06T00:00:00"
     }
   ],
   "Posts": [
@@ -96,16 +106,12 @@
       "Post": {
         "title": "Hello world",
         "body": "What a beautiful day",
-        "Username": "Agata",
+        "user": null,
         "id": 1,
         "VoteScore": 0,
         "Votes": []
       },
-      "User": {
-        "Username": "Agata",
-        "Password": "123123123",
-        "DateOfBirth": "2002-10-20T00:00:00"
-      },
+      "Username": null,
       "Id": 1
     },
     {
@@ -122,11 +128,7 @@
         "VoteScore": 0,
         "Votes": []
       },
-      "User": {
-        "Username": "Agata",
-        "Password": "123123123",
-        "DateOfBirth": "2002-10-20T00:00:00"
-      },
+      "Username": null,
       "Id": 2
     }
   ]

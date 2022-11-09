@@ -51,6 +51,8 @@
         {
             if (userName != null && password != null) await authService.LoginAsync(userName, password);
             navMgr.NavigateTo("/ProfilePage");
+            
+            
         }
         catch (Exception e)
         {
