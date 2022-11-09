@@ -51,10 +51,6 @@ public class JwtAuthService : IAuthService
         IEnumerable<Claim> claims = ParseClaimsFromJwt(Jwt);
 
         Console.WriteLine("Claims: ");
-        foreach (Claim claim in claims)
-        {
-            Console.WriteLine("c: " + claim.Value);
-        }
     
         ClaimsIdentity identity = new(claims, "jwt");
 
