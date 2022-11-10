@@ -4,7 +4,7 @@ Video: https://www.youtube.com/watch?v=JUyOLD4QhgU
 
 ## Class diagram
 
-<img href="docs/class-diagram.png">
+<img src="docs/class-diagram.png">
 
 ## Requirements
 
