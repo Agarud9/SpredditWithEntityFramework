@@ -27,7 +27,12 @@ public class PostLogic : IPostLogic
         }
         
         //A new post is created
-        Post post = new Post(dto.Title, dto.Body, user);
+        Post post = new Post
+        {
+            title = dto.Title,
+            body = dto.Body,
+            user = user
+        };
         
         //Validating the new post
         ValidatePost(post);

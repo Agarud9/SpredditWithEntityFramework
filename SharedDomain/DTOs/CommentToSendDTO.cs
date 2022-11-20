@@ -3,9 +3,9 @@ namespace SharedDomain.DTOs;
 
 public class CommentToSendDTO
 {
-    public string Comment { get;}
-    public string Username { get;}
-    public int PostId { get; }
+    public string Comment { get; set; }
+    public string Username { get;set; }
+    public int PostId { get; set; }
 
     public CommentToSendDTO(string comment,string username, int postId)
     {
@@ -13,5 +13,10 @@ public class CommentToSendDTO
         Username = username;
         PostId = postId;
     }
-    
+
+    public CommentToSendDTO()
+         {
+             
+         }
+
 }

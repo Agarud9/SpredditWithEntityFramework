@@ -33,25 +33,26 @@
             </div>
         </div>
         <div class="column">
-           @if (IsLogged)
-           {
+            @if (IsLogged)
+            {
                 <div class="writeComment">
                     <input style="width: 80%" type="text" @bind="Comment" placeholder="Write a comment"/>
-                    <button @onclick="WriteComment" >Post</button>
+                    <button @onclick="WriteComment">Post</button>
+                </div>
+            }
+            <div class="displayComments">
+                @foreach (var comment in comments)
+                {
+                    <div class="comment">
+                        <div class="username">@comment.Username</div>
+                        <div class="body">@comment.Body</div>
                     </div>
-           }
-           <div class="displayComments">
-               @foreach (var comment in comments)
-               {
-                   <div class="comment">
-                       <div class="username">@comment.Username</div>
-                       <div class="body">@comment.Body</div>
-                   </div>
-               }
-           </div>
-        </div>
-       
+                }
+
             </div>
+        </div>
+
+    </div>
 }
 else
 {
@@ -60,8 +61,10 @@ else
 
 
 @code {
+
     [CascadingParameter]
     private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
     [Parameter]
     public int Id { get; set; }
 
@@ -70,11 +73,11 @@ else
     private int downVote { get; set; }
     private IEnumerable<Comment>? comments;
     private string? Username { get; set; }
-    private bool IsLogged => Username is not null; 
+    private bool IsLogged => Username is not null;
     private string Comment { get; set; }
 
     private string msg = "";
-    
+
     protected override async Task OnInitializedAsync()
     {
         msg = "";
@@ -84,7 +87,7 @@ else
             upVotes = await postService.GetNumberOfUpVotes(Id);
             downVote = await postService.GetNumberOfDownVotes(Id);
             comments = (await postService.GetAllComments(Id)).Reverse();
-            
+
             var authState = await AuthenticationStateTask;
             ClaimsPrincipal principal = authState.User;
             Username = (from claim in principal.Claims where claim.Type == "Username" select claim.Value).FirstOrDefault();
@@ -94,28 +97,31 @@ else
             Console.WriteLine(e);
             msg = e.Message;
         }
-    } 
+    }
+
     private async Task UpVote()
     {
-        if(!IsLogged)
+        if (!IsLogged)
             return;
         VoteDTO dto = new VoteDTO
         {
-            Username = Username
+            Username = Username,
+            PostId = Id
         };
-        await postService.UpVote(Id,dto);
+        await postService.UpVote(Id, dto);
         await OnInitializedAsync();
     }
-    
+
     private async Task DownVote()
     {
-        if(!IsLogged)
-        return;
+        if (!IsLogged)
+            return;
         VoteDTO dto = new VoteDTO
         {
-            Username = Username
+            Username = Username,
+            PostId = Id
         };
-        await postService.DownVote(Id,dto);
+        await postService.DownVote(Id, dto);
         await OnInitializedAsync();
     }
 
@@ -130,5 +136,5 @@ else
         Comment = "";
         await OnInitializedAsync();
     }
-    
-    }
+
+}

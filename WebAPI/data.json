@@ -31,11 +31,11 @@
         "DateOfBirth": "2002-10-20T00:00:00"
       },
       "id": 1,
-      "VoteScore": 0,
+      "VoteScore": -2,
       "Votes": [
         {
           "Username": "Agata",
-          "Type": 1
+          "Type": -1
         },
         {
           "Username": "eeeee",
@@ -93,8 +93,13 @@
         "DateOfBirth": "2002-10-20T00:00:00"
       },
       "id": 5,
-      "VoteScore": 0,
-      "Votes": []
+      "VoteScore": 1,
+      "Votes": [
+        {
+          "Username": "Agata",
+          "Type": 1
+        }
+      ]
     },
     {
       "title": "A new post",
@@ -833,6 +838,54 @@
       },
       "Username": "Agata",
       "Id": 28
+    },
+    {
+      "Body": "cool",
+      "Post": {
+        "title": "Hello world",
+        "body": "What a beautiful day",
+        "user": {
+          "Username": "Agata",
+          "Password": "123123123",
+          "DateOfBirth": "2002-10-20T00:00:00"
+        },
+        "id": 1,
+        "VoteScore": -2,
+        "Votes": [
+          {
+            "Username": "Agata",
+            "Type": -1
+          },
+          {
+            "Username": "eeeee",
+            "Type": -1
+          }
+        ]
+      },
+      "Username": "Agata",
+      "Id": 29
+    },
+    {
+      "Body": "nice",
+      "Post": {
+        "title": "hello",
+        "body": "its nice",
+        "user": {
+          "Username": "Agata",
+          "Password": "123123123",
+          "DateOfBirth": "2002-10-20T00:00:00"
+        },
+        "id": 5,
+        "VoteScore": 1,
+        "Votes": [
+          {
+            "Username": "Agata",
+            "Type": 1
+          }
+        ]
+      },
+      "Username": "Agata",
+      "Id": 30
     }
   ]
 }

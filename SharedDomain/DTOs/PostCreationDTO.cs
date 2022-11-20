@@ -4,9 +4,9 @@ namespace SharedDomain.DTOs;
 
 public class PostCreationDTO
 {
-    public string Title { get; }
-    public string Body { get; }
-    public String Username { get;  }
+    public string Title { get; private set; }
+    public string Body { get; private set; }
+    public String Username { get; private set; }
 
     public PostCreationDTO(string title, string body, String username)
     {
@@ -14,5 +14,6 @@ public class PostCreationDTO
         Body = body;
         Username = username;
     }
-    
+
+
 }

@@ -25,7 +25,7 @@ public class UserLogic : IUserLogic
         
         ValidateData(user);
          
-        return await dao.CreateUser(user);
+        return await dao.CreateUserAsync(user);
     }
 
     public async Task<UserToSendDTO> LogIn(string username, string password)

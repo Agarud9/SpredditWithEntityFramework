@@ -4,7 +4,7 @@ using SharedDomain.Models;
 
 namespace FileData.DAOs;
 
-public class UserDaoImpl : IUserDao
+public class UserDaoImpl 
 {
     private FileContext context;
 

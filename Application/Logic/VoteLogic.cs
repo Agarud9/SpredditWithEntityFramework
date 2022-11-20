@@ -53,7 +53,8 @@ public class VoteLogic : IVoteLogic
         var vote = new Vote
         {
             Username = username!,
-            Type = type
+            Type = type,
+            PostId = postId
         };
 
         await voteDao.VoteAsync(postId, vote);
